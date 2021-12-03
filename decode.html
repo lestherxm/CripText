@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="es">
+
+  <head>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Ejemplo de aplicación básica de la criptografía">
+      <meta name="author" content="Lesther Xitumul Manuel, TDS-2021">
+      <meta name="generator" content="CripText 1.0">
+      <title>CripText</title>
+      <!-- Este es un ejemplo creado a base del ejemplo Bootrstrap: sign-in  -->
+      <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+      <!-- Bootstrap core CSS -->
+      <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="./assets/css/signin.css" rel="stylesheet">
+
+  </head>
+
+  <body class="text-center">
+
+      <main class="form-signin">
+
+          <!-- LOGO DE LA @APP -->
+          <img class="mb-4" src="./assets/img/logo.png" alt="" width="70" height="70">
+
+          <!-- En este apartado el usuario digita el texto cifrado a descifrar -->
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Texto Cifrado">
+            <label for="floatingInput">Texto Cifrado</label>
+          </div>
+          
+          <!-- * DIV ESPACIO * -->
+          <div class="form-floating"><br></div>
+
+          <button class="w-100 btn btn-lg btn-primary">DESCIFRAR</button>
+
+          <!-- * DIV ESPACIO * -->
+          <div class="form-floating"><br></div>
+
+          <!-- En este div el usuario podrá visualizar el texto plano descifrado-->
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Texto Cifrado" readonly>
+            <label for="floatingPassword">Texto Plano</label>
+          </div>
+
+      </main>
+
+      <script src="./assets/decode.js"></script>
+
+  </body>
+
+</html>
