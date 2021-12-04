@@ -13,9 +13,8 @@ document.getElementById('encode').addEventListener('click',()=>
         let result = encodeText(passEncode).concat(encodeText(planeText))
 
         //Se le muestra al usuario el resultado
-        console.log(result)
+        console.log(result)// *** DELETE *** 
         $('#encodeText').val(result)
-
 
     }
     //De lo contrario, se muestra la ventana modal.
@@ -28,7 +27,7 @@ document.getElementById('encode').addEventListener('click',()=>
 // Este metodo devuelve verdadero si no se ha ingresado NADA en alguno de los 2 campos.
 function validateInputs()
 {
-    
+    //Se evalua si la longitud de la cadena es cero en ambos inputs
     if (($('#planeText').val().length == 0) || ($('#passEncode').val().length == 0))
     {
       return false
@@ -44,7 +43,7 @@ function getRandomNumber(min, max)
     return Math.floor((Math.random() * (max - min + 1)) + min)
 }
 
-// Esta funcion retorna verdadero si el numero proporcionado es impar, de lo contrrario retorna falso
+// Esta funcion retorna verdadero(1) si el numero proporcionado es impar, de lo contrrario retorna falso (0)
 function isOdd(number)
 {
     return (number%2)

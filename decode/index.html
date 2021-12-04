@@ -13,9 +13,14 @@
       <!-- Este es un ejemplo creado a base del ejemplo Bootrstrap: sign-in  -->
       <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
       <!-- Bootstrap core CSS -->
-      <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Remote -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <!-- Local -->
+      <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
       <!-- Custom styles for this template -->
-      <link href="./assets/css/signin.css" rel="stylesheet">
+      <link href="../assets/css/signin.css" rel="stylesheet">
+      <!-- Custom styles for the modal window -->
+      <link href="../assets/css/modals.css" rel="stylesheet">
 
   </head>
 
@@ -24,32 +29,71 @@
       <main class="form-signin">
 
           <!-- LOGO DE LA @APP -->
-          <img class="mb-4" src="./assets/img/logo.png" alt="" width="70" height="70">
+          <img class="mb-4" src="../assets/img/logo.png" alt="" width="70" height="70">
 
-          <!-- En este apartado el usuario digita el texto cifrado a descifrar -->
+          <!-- En este apartado el usuario digita la clave de cifrado -->
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Texto Cifrado">
-            <label for="floatingInput">Texto Cifrado</label>
+            <input type="text" class="form-control" id="encryptionKey" placeholder="Clave de Cifrado">
+            <label for="floatingInput">Clave de Cifrado</label>
           </div>
           
           <!-- * DIV ESPACIO * -->
           <div class="form-floating"><br></div>
 
-          <button class="w-100 btn btn-lg btn-primary">DESCIFRAR</button>
+          <!-- En este apartado el usuario podrá ingresar el texto plano cifrado/ a descifrar -->
+          <div class="form-floating">
+            <input type="text" class="form-control" id="encodeText" placeholder="Texto Cifrado">
+            <label for="floatingPassword">Texto Cifrado</label>
+          </div>
 
           <!-- * DIV ESPACIO * -->
           <div class="form-floating"><br></div>
 
-          <!-- En este div el usuario podrá visualizar el texto plano descifrado-->
+          <!-- * BOTON QUE APLICA LA LOGICA DE decode.js  Y EL DISPARADOR DEL MODAL EN CASO DE ERROR O ALERTA * -->
+          <button type="button" class="w-100 btn btn-lg btn-primary" id="decode">DESCIFRAR</button>
+          
+          <!-- * DIV ESPACIO * -->
+          <div class="form-floating"><br></div>
+
+          <!-- En este apartado el usuario podrá visualizar el texto plano/ decifrado -->
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Texto Cifrado" readonly>
-            <label for="floatingPassword">Texto Plano</label>
+            <input type="text" class="form-control" id="plainText" placeholder="Texto Plano" readonly>
+            <label for="floatingInput">Texto Plano</label>
           </div>
+           
+          <!-- INICIO - VENTANA MODAL-->
+          <div class="modal fade" id="myModalWindow" tabindex="-1" role="dialog" aria-labelledby="myModalWindowLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
 
-      </main>
+                <!-- ENCABEZADO -->
+                <div class="modal-header">
+                  <h5 class="modal-title" id="myModalWindowLabel">Oops!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
-      <script src="./assets/decode.js"></script>
+                <!-- CUERPO -->
+                <div class="modal-body">
+                  Tanto el Texto Cifrado como la Clave de Cifrado son campos necesarios; por ende los tienes que proporcionar.
+                </div>
 
-  </body>
+                <!-- PIE -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" autofocus>DE ACUERDO</button>
+                </div>
 
+              </div>
+            </div>
+          </div>
+          <!-- FIN - VENTANA MODAL -->
+
+        </main>
+
+        <script src="../assets/js/decode.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>  
 </html>
