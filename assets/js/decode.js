@@ -88,25 +88,30 @@ function isTheEncryptionKey(encodeText,encryptionKey,charactersToTake)
 // metodo para obtener el texto plano en caso de que dicha clave sea valida.
 function decode(encodeText,start,end)
 {
-    //Se obtienen los numeros del texto cifrado con base en el inicio y fin especificado
-    let numbers = getNumbers(encodeText,start,end)
+    try {
+        //Se obtienen los numeros del texto cifrado con base en el inicio y fin especificado
+        let numbers = getNumbers(encodeText,start,end)
+        
+        //Se obtienen los strings del texto cifrado con base en el inicio y fin especificados
+        let strings = getStrings(encodeText,start,end)
+
+        //Se obtiene el equivalente ASCII de los strings del texto cifrado
+        const asciiOfTheStrings = getAscii(strings)
     
-    //Se obtienen los strings del texto cifrado con base en el inicio y fin especificados
-    let strings = getStrings(encodeText,start,end)
+        //Se valida el array de numeros y se hace el respectivo ajuste en los codigos ascii de los strings
+        let fixedAsciiStrings = getFixedAscii(numbers, asciiOfTheStrings)
 
-    //Se obtiene el equivalente ASCII de los strings del texto cifrado
-    const asciiOfTheStrings = getAscii(strings)
- 
-    //Se valida el array de numeros y se hace el respectivo ajuste en los codigos ascii de los strings
-    let fixedAsciiStrings = getFixedAscii(numbers, asciiOfTheStrings)
+        //Ahora que se tienen nuevos valores ascii, se obtienen los equivalentes en string
+        let reversPlainText = fromAsciiToString(fixedAsciiStrings)
 
-    //Ahora que se tienen nuevos valores ascii, se obtienen los equivalentes en string
-    let reversPlainText = fromAsciiToString(fixedAsciiStrings)
+        //Finalmente, @reversPlainText es un array que contiene strings, eso constituiría el texto plano
+        //descifrado, sin embargo, está a la inversa, por lo que se retorna la inversa del array y se juntan
+        //cada uno de los items de dicho array
+        return reversPlainText.reverse().join("")
 
-    //Finalmente, @reversPlainText es un array que contiene strings, eso constituiría el texto plano
-    //descifrado, sin embargo, está a la inversa, por lo que se retorna la inversa del array y se juntan
-    //cada uno de los items de dicho array
-    return reversPlainText.reverse().join("")
+    } catch (error) {//No se descartan errores, por eso se coloca este alert.
+        alert('Error, validar: \n 1. Que ambos campos sean correctos \n 2. Que el texto cifrado haya sido protegido con esta herramienta.')
+    }
 }
 
 //Este metodo retorna un array que contiene los numeros de un texto cifrado; toma las posiciones

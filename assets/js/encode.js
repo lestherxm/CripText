@@ -53,44 +53,48 @@ function isOdd(number)
 // Esta funcion se encarga de cifrar determinado texto plano
 function encodeText(planeText)
 {
-    // String en texto plano = planeText
+    try {
+        // String en texto plano = planeText
 
-    // Invertir el String
-        // Primero se obtiene el String caracter por caracter, .split() devuelve un Array
-        let planeTextCharacters = planeText.split("")
-        // Despues se invierte la posicion de cada caracter para obtener el resultado
-        let planeTextReverseCh = planeTextCharacters.reverse()
+        // Invertir el String
+            // Primero se obtiene el String caracter por caracter, .split() devuelve un Array
+            let planeTextCharacters = planeText.split("")
+            // Despues se invierte la posicion de cada caracter para obtener el resultado
+            let planeTextReverseCh = planeTextCharacters.reverse()
 
-    // Obtener los numeros ASCII de cada caracter del String (invertido)
-    let asciiTxtReverse = getAscii(planeTextReverseCh)
+        // Obtener los numeros ASCII de cada caracter del String (invertido)
+        let asciiTxtReverse = getAscii(planeTextReverseCh)
 
-    // Calcular N = la longitud del string
-    let lengthPlaneText = planeText.length;
-    
-    // Calcular N numeros random del 0 al 9
-    const randomNumbers = new Array(lengthPlaneText).
-                          fill(null).
-                          map(()=>
-                          getRandomNumber(0, 9))
-    // Explicacion Codigo anterior
-        /*  - se crea el array de longitud N
-            - se llena el array con nulos
-            - se mapea el array y se le setean numeros random del cero al nueve
-        */    
+        // Calcular N = la longitud del string
+        let lengthPlaneText = planeText.length;
+        
+        // Calcular N numeros random del 0 al 9
+        const randomNumbers = new Array(lengthPlaneText).
+                            fill(null).
+                            map(()=>
+                            getRandomNumber(0, 9))
+        // Explicacion Codigo anterior
+            /*  - se crea el array de longitud N
+                - se llena el array con nulos
+                - se mapea el array y se le setean numeros random del cero al nueve
+            */    
 
-    // Se Evalua los numeros random generados y aplicar la operacion pertinente
-    let newAsciiTxtReverse = getAlterAscii(randomNumbers,asciiTxtReverse)
+        // Se Evalua los numeros random generados y aplicar la operacion pertinente
+        let newAsciiTxtReverse = getAlterAscii(randomNumbers,asciiTxtReverse)
 
-    // Convertir los Codigos ASCCI  obtenidos a los respectivos caracteres
-    let newPlaneText = fromAsciiToString(newAsciiTxtReverse)
+        // Convertir los Codigos ASCCI  obtenidos a los respectivos caracteres
+        let newPlaneText = fromAsciiToString(newAsciiTxtReverse)
 
-    // Finalmente, se obtiene el texto cifrado, el cual es una combinacion de los strings
-    // cuyos codigos ascii han sido alterados y los numeros random generados para poder descifrarlos posteriormente.
-    // @newAsciiTxtReverse se envia como array auxiliar, no tiene ningun valor añadido en la logica 
-    let arrayEncodeText = getEncodeText(newAsciiTxtReverse, newPlaneText,randomNumbers)
+        // Finalmente, se obtiene el texto cifrado, el cual es una combinacion de los strings
+        // cuyos codigos ascii han sido alterados y los numeros random generados para poder descifrarlos posteriormente.
+        // @newAsciiTxtReverse se envia como array auxiliar, no tiene ningun valor añadido en la logica 
+        let arrayEncodeText = getEncodeText(newAsciiTxtReverse, newPlaneText,randomNumbers)
 
-    // Se retorna la union de cada uno de los elementos del array anterior: A 3 E 2 I 1 = A3E2I1
-    return arrayEncodeText.join("")
+        // Se retorna la union de cada uno de los elementos del array anterior: A 3 E 2 I 1 = A3E2I1
+        return arrayEncodeText.join("")
+    } catch (error) {//No se descartan errores, por eso se coloca este alert.
+        alert("Hubo un error al cifrar el texto plano, vuelve a intentarlo otra vez.")
+    }
 }
 
 // este metodo devuelve un array de codigos ascci pertenecientes a un array de strings proporcionado
