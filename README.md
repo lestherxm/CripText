@@ -1,6 +1,9 @@
 # AUTOR 
 * Lesther Xitumul Manuel
 
+# DEMO
+* https://lestherxm.github.io/CripText/ 
+
 # ¿CÓMO FUNCIONA?
 Se hace uso de los códigos ASCII (enlace de referencia: https://elcodigoascii.com.ar/) para cifrar determinado texto plano. El código está comentado de forma explícita; sin embargo, se proporciona la siguiente información...
 
