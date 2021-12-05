@@ -1,3 +1,5 @@
+//Se obtiene el elemento para cifrar el texto plano y se le agrega un add event listener
+//para detectar cuando se haga click en él
 document.getElementById('encode').addEventListener('click',()=>
 {
     //Si hay texto en los inputs, proseguir con el algoritmo
@@ -10,10 +12,10 @@ document.getElementById('encode').addEventListener('click',()=>
         let passEncode = $('#passEncode').val()
 
         //Se obtiene la Cadena Cidfrada a través del método @encodeText
+        //Tanto la clave de cifrado como el texto plano constituyen el texto cifrado
         let result = encodeText(passEncode).concat(encodeText(planeText))
 
         //Se le muestra al usuario el resultado
-        console.log(result)// *** DELETE *** 
         $('#encodeText').val(result)
 
     }
@@ -34,16 +36,15 @@ function validateInputs()
     }
     //else
     return true
-  
 }
 
-// Esta funcion retorna un numero aleatorio del @min al @max indicado al momento de invocarla
+// Este metodo retorna un numero aleatorio del @min al @max indicado
 function getRandomNumber(min, max)
 {
     return Math.floor((Math.random() * (max - min + 1)) + min)
 }
 
-// Esta funcion retorna verdadero(1) si el numero proporcionado es impar, de lo contrrario retorna falso (0)
+// Este metodo retorna verdadero(1) si el numero proporcionado es impar; falso (0) si es par
 function isOdd(number)
 {
     return (number%2)
@@ -53,61 +54,90 @@ function isOdd(number)
 function encodeText(planeText)
 {
     // String en texto plano = planeText
-    console.log(planeText) // *** DELETE ***
+
     // Invertir el String
-        // Obtener el String caracter por caracter .split() devuelve un Array
+        // Primero se obtiene el String caracter por caracter, .split() devuelve un Array
         let planeTextCharacters = planeText.split("")
-        // Invertir la posicion de cada caracter para obtener el resultado
+        // Despues se invierte la posicion de cada caracter para obtener el resultado
         let planeTextReverseCh = planeTextCharacters.reverse()
-    console.log(planeTextReverseCh) // *** DELETE ***
-    // Obtener los numeros ASCCI de cada caracter del String (invertido)
-    let ascciTxtReverse = new Array()
-        planeTextReverseCh.forEach( character => 
-        {
-            ascciTxtReverse.push(character.codePointAt(0))
-        })
-    console.log(ascciTxtReverse) // *** DELETE ***
+
+    // Obtener los numeros ASCII de cada caracter del String (invertido)
+    let asciiTxtReverse = getAscii(planeTextReverseCh)
+
     // Calcular N = la longitud del string
     let lengthPlaneText = planeText.length;
     
     // Calcular N numeros random del 0 al 9
-    const randomNumbers = new Array(lengthPlaneText).fill(null).map(()=>getRandomNumber(0, 9))
+    const randomNumbers = new Array(lengthPlaneText).
+                          fill(null).
+                          map(()=>
+                          getRandomNumber(0, 9))
     // Explicacion Codigo anterior
         /*  - se crea el array de longitud N
             - se llena el array con nulos
             - se mapea el array y se le setean numeros random del cero al nueve
         */    
-    console.log(randomNumbers) // *** DELETE ***
-    // Evaluar numeros random generados y aplicar la operacion pertinente
-    let newAscciTxtReverse = new Array()
-         randomNumbers.forEach((number,index) => 
-         {
+
+    // Se Evalua los numeros random generados y aplicar la operacion pertinente
+    let newAsciiTxtReverse = getAlterAscii(randomNumbers,asciiTxtReverse)
+
+    // Convertir los Codigos ASCCI  obtenidos a los respectivos caracteres
+    let newPlaneText = fromAsciiToString(newAsciiTxtReverse)
+
+    // Finalmente, se obtiene el texto cifrado, el cual es una combinacion de los strings
+    // cuyos codigos ascii han sido alterados y los numeros random generados para poder descifrarlos posteriormente.
+    // @newAsciiTxtReverse se envia como array auxiliar, no tiene ningun valor añadido en la logica 
+    let arrayEncodeText = getEncodeText(newAsciiTxtReverse, newPlaneText,randomNumbers)
+
+    // Se retorna la union de cada uno de los elementos del array anterior: A 3 E 2 I 1 = A3E2I1
+    return arrayEncodeText.join("")
+}
+
+// este metodo devuelve un array de codigos ascci pertenecientes a un array de strings proporcionado
+function getAscii(strings)
+{
+    let ascci = new Array()
+    strings.forEach(character =>  //se recorre el array de strings.
+        {
+             ascci.push(character.codePointAt(0)) //a cada caracter se le obtiene su numero ascii equivalente
+        })
+    return ascci //finalmente se retorna el array de codigos ascii
+}
+
+// Este metodo se encarga de alterar determinados codigos ascii con base en determinados numeros
+function getAlterAscii(numbers, asciiStrings)
+{
+    let ascii = new Array()
+        numbers.forEach((number,index) => 
+        {
             if(isOdd(number)) // Si es impar se hace una resta
             { 
-                newAscciTxtReverse.push(ascciTxtReverse[index] - number)
+                ascii.push(asciiStrings[index] - number)
             }else // De lo contrario si es par, se hace una suma
             {
-                newAscciTxtReverse.push(ascciTxtReverse[index] + number)
+                ascii.push(asciiStrings[index] + number)
             }
-         })
-    console.log(newAscciTxtReverse) // *** DELETE ***
-    // Convertir los Codigos ASCCI  obtenidos a los respectivos caracteres
-    let newPlaneText = new Array()
-        newAscciTxtReverse.forEach( number =>
-         {
-            newPlaneText.push(String.fromCodePoint(number))
-         })
-    console.log(newPlaneText) // *** DELETE ***
-    // Despues de cada uno de los caracteres, colocar el numero random respectivo.
-    let arrayEncodeText = new Array()
-        newAscciTxtReverse.forEach( (element, index) =>
-        {
-            arrayEncodeText.push(newPlaneText[index])
-            arrayEncodeText.push(randomNumbers[index])
         })
-    console.log(arrayEncodeText) // *** DELETE ***
+    return ascii // finalmente se retorna el array de codigos asciii alterados.
+}
 
-    // Se retorna la union de cada uno de los elementos del array anterior: A E I = AEI
-    return arrayEncodeText.join("")
+//Este metodo devuelve los equivalentes en string de determinados codigos ascii 
+function fromAsciiToString(asciiCodes)
+{
+    let strings = new Array()
+    asciiCodes.forEach(code => //se da le ctura al array de codigos ascii
+        {
+            strings.push(String.fromCodePoint(code)) //por cada item se obtiene el equivalente en string
+        })
+    return strings //finalmente se retorna el array de strings equivalente de los codigos ascii
+}
 
+function getEncodeText(aux, strings, numbers){
+    let encodeText = new Array()
+    aux.forEach( (element, index) =>
+    {
+        encodeText.push(strings[index])//despues de cada string
+        encodeText.push(numbers[index])//va un numero que ayudará para el descifrado posterior.
+    })
+    return encodeText
 }
